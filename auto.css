@@ -1,0 +1,70 @@
+.background {
+    position: absolute;
+    border-radius: 25px;
+    top: 15%;
+    left: 35%;
+    width: 60%;
+    height: 77%;
+    /*padding-left: 5px;*/
+}
+
+html {
+  background-color: aliceblue;
+}
+/*body {
+  height: 95%;
+  margin: 0;
+  padding: 5%;
+  background-color: #Bf94e4;
+}*/
+
+.container {
+  position: absolute;
+  border-radius: 25px;
+  top: 2.5%;
+  left: 2.5%;
+  width: 90%;
+  height: 90%;
+  background-color: #Bf94e4;
+  padding-left: 5%;
+}
+h1 {
+  font-size: 50px;
+  text-align: left;
+  color:floralwhite;
+  font-family: 'Copperplate', sans-serif, fantasy;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px #000000;
+  margin: 0;
+}
+input {
+  border-radius: 20px;
+  margin: 0;
+  padding: 10px;
+  font-size: 20px;
+}
+label {
+  font-size: 20px;
+  color:#00FF7F;
+  /*color: #000000;*/
+  font-family: 'Copperplate', sans-serif, fantasy;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px #000000;
+}
+select {
+  list-style-type:none; 
+  border-radius: 20px;
+  margin: 0;
+  padding: 10px;
+ /* display: flex;*/
+  font-size: 20px;
+}
+table {
+  /*border-collapse: collapse;*/
+  border-radius: 25px;
+  background-color: aliceblue;
+  border: 2px solid #00FF7F;
+  width: 25%;
+ /* height: 40%;*/
+ box-shadow: #Bf94e4 5px 5px 10px;
+}

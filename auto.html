@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DinnerWizard</title>
+   <!--- <link rel="stylesheet" type="text/css" href="./normalize.css" /> --->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="./auto.css"/>
+</head>
+
+
+<body>
+<div class="container">
+    <br><br>
+    <h1 class="text-center">
+    DinnerWizard
+    </h1>
+    <div class="background" id="map"></div>
+    <div class="form-group">
+        <!--<label for="location">Enter a location:</label>-->
+        <br><br>
+        <input type="text" class="form-control" id="autocomplete" placeholder="Enter Location"/>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="places">Select Style:</label>
+        <br><br>
+        <select class="form-control" name="" id="type" aria-placeholder="Select Type">
+            <option value="cafe">Cafe</option> 
+            <option value="restaurant">Restaurant</option>
+            <option value="bar">Bar</option>
+        </select>
+        <br><br>
+    </div>
+
+    <div class="form-group">
+        <label for="radius">Select Distance:</label>
+        <br><br>
+        <select class="form-control" name="" id="radius" aria-placeholder="Select Distance">
+            <option value="1609">1 mile</option>
+            <option value="3218">2 miles</option>
+            <option value="8046">5 miles</option>
+            <option value="16093">10 miles</option>
+        </select> 
+    </div>
+
+    <br><br>    
+    <table class="table table-bordered table-striped" id="places"></table>
+</div>
+
+</body>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBD5IALn7vlk64h-ImW1Lv3A4CCT3ytKU0&libraries=places&v=weekly&callback=initMap"
+    type="text/javascript" async defer>
+    </script>
+
+<script> 
+    function initMap() {
+        autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'), {
+            types: ['geocode'],
+        });
+
+        autocomplete.addListener('place_changed', searchNearbyPlaces)
+    }
+
+    document.getElementById('type').onchange = searchNearbyPlaces
+    document.getElementById('radius').onchange = searchNearbyPlaces
+    function searchNearbyPlaces() {
+        document.getElementById('places').innerHTML = '';
+
+        var place = autocomplete.getPlace();
+        console.log(place);
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: place.geometry.location,
+            zoom: 15,
+        });
+        // nearby Search
+
+        service = new google.maps.places.PlacesService(map);
+        service.nearbySearch({
+            location: place.geometry.location,
+            radius: [document.getElementById('radius').value],
+            types: [document.getElementById('type').value]
+            //includedTypes: [document.getElementById('type').value]
+
+        }, callback);
+
+    }
+
+    function callback(results, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            console.log(results.length);
+            for (var i = 0; i < results.length; i++) {
+                 createMarker(results[i]);
+            }
+        }
+    }
+
+    function createMarker(place) {
+        console.log(place)
+        var table = document.getElementById('places');
+        var row = table.insertRow();
+        var cell1 = row.insertCell(0);
+        cell1.innerHTML = place.name;
+        var cell2 = row.insertCell(1);
+        cell2.innerHTML = place.vicinity;
+       /* if (place.photos) {
+            let photoUrl = place.photos[0].getUrl();
+            let cell2 = row.insertCell(1);
+            cell2.innerHTML = '<img width="100" height="100" src="${photoUrl}" alt="Place Image"/>';
+        } else {
+            let photoUrl = 'https://via.placeholder.com/100'
+            let cell2 = row.insertCell(1);
+            cell2.innerHTML = '<img src="${photoUrl}" alt="Place Image" width="100" height="100"/>';
+        }*/
+    }
+
+</script>
+</html>
